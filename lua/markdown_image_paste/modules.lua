@@ -6,16 +6,20 @@ local function is_screenshot(filepath)
 end
 
 local function send_to_cwd(filepath, currentDirectory)
-    local ssDirectory = '/home/mark/Pictures/'
+    local ssDirectory = vim.g.markdown_image_paste
     local filename = filepath:gsub(ssDirectory, '')
     
     return currentDirectory .. filename
 end
 
 function M.MarkdownImagePaste()
+    if vim.g.markdown_image_paste == nil then
+        print('Image directory not set')
+        return
+    end
     local imgDirectory = vim.fn.getcwd(0) .. '/images/'
     
-    if vim.fn.isdirectory(imgDirectory) == false then
+    if vim.fn.isdirectory(imgDirectory) == 0 then
         print('Image directory does not exist. Creating images directory...')
         vim.api.nvim_command('!mkdir ' .. imgDirectory)
     end
@@ -24,14 +28,13 @@ function M.MarkdownImagePaste()
     if is_screenshot(file) then
         local n_file = send_to_cwd(file, imgDirectory)
         local imagetext = '![](' .. n_file .. ')'
-        vim.api.nvim_command('!mv ' .. file .. ' ' .. n_file)
+        vim.api.nvim_command('!mv ' .. file .. ' ' ..  n_file)
 
         vim.api.nvim_paste(imagetext, 0, -1)
         print('Image link is pasted into the buffer')
     else
         print('Not a screenshot')
     end
-
 end
 
 function M.MarkdownImageDelete()
