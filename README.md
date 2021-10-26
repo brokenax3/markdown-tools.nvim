@@ -3,6 +3,7 @@ Paste screenshots into Markdown files.
 
 This plugin moves the screenshot to a `images` folder in the current working directory.
 
+## Workflow: Markdown
 ```bash
 # This is an example path of a screenshot taken.
 # This screenshot will be moved to the new path. The original is removed.
@@ -15,6 +16,22 @@ This plugin moves the screenshot to a `images` folder in the current working dir
 
 # Calling MarkdownImageDelete deletes the image with the link under the current line.
 # The current line along with the image will be removed.
+```
+
+## Workflow: LaTeX
+```bash
+# This is similar to Markdown but with two key changes.
+#   1. The input text is as follows.
+#
+#       \begin{figure}[htbp]
+#           \centering
+#           \includegraphics[width=0.7\textwidth, height=8cm]{image.png}
+#           \caption{}
+#           \label{fig:}
+#       \end{figure}
+#   2. Deleting the image only works when the cursor is at the first line of the figure block. 
+#       This means that deleting figures is hardcoded. *Use at your own risk*. It also does not
+#       work with subfigures. I might do something about this when I have the time.
 ```
 
 ## Configuration
@@ -41,4 +58,6 @@ Functions           | Description
 --------------------| --------------------------------------------------------------------
 MarkdownImagePaste  | Paste the image on the clipboard into the current working directory.
 MarkdownImageDelete | Prompts to delete the image under the line.
+TexImagePaste | Paste the image on the clipboard to the current working directory.
+TexImageDelete | Prompts to delete the image under the line.
 

@@ -57,4 +57,56 @@ function M.MarkdownImageDelete()
     end
 end
 
+function M.TexImagePaste()
+    if vim.g.markdown_image_paste == nil then
+        print('Image directory not set')
+        return
+    end
+    local imgDirectory = vim.fn.getcwd(0) .. '/images/'
+    
+    if vim.fn.isdirectory(imgDirectory) == 0 then
+        print('Image directory does not exist. Creating images directory...')
+        vim.api.nvim_command('!mkdir ' .. imgDirectory)
+    end
+
+    local file = vim.fn.getreg('*'):gsub('\n', '')
+    if is_screenshot(file) then
+        local n_file = send_to_cwd(file, imgDirectory)
+        local relative_link = n_file:match('(images/.*)')
+        local imagetext = [=[\begin{figure}[htbp]]=] .. '\n    \\centering\n    \\includegraphics[width=0.7\\textwidth, height=8cm]{%s}\n    \\caption{}\n    \\label{fig:}\n\\end{figure}\n'
+
+        vim.api.nvim_command('!mv ' .. file .. ' ' ..  n_file)
+
+        vim.api.nvim_paste(string.format(imagetext, relative_link), 0, -1)
+        print('Image link is pasted into the buffer')
+    else
+        print('Not a screenshot')
+    end
+end
+
+function M.TexImageDelete()
+    -- Test if the string under the cursor matches '![]'
+    local start = vim.fn.line('.')
+    local endt = start + 2
+
+    if vim.fn.getline(start):find('\\begin{figure}') ~= nil then
+        local file = vim.fn.getline(endt):match('(images/.+)}')
+        local filename = vim.fn.getcwd(0) .. '/' .. file
+        -- print(filename)
+        
+        if is_screenshot(filename) then
+            if vim.fn.input('File ' .. file .. ' found. Delete? (y/n) ') == 'y' then
+                vim.api.nvim_command('silent !rm ' .. filename)
+                vim.api.nvim_command('silent ' .. start .. 'del 6')
+
+                print('File ' .. file .. ' deleted.')
+            else
+                print('File ' .. file .. ' not deleted.')
+            end
+        else
+            print('File not found.')
+        end
+    end
+end
+
 return M
