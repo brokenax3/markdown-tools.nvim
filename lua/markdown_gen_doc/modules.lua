@@ -1,4 +1,4 @@
-local N = {}
+local M = {}
 
 local function check_paths()
     local target_dir = '..' .. vim.fn.getcwd(0) .. 'docs'
@@ -7,9 +7,10 @@ local function check_paths()
         print('Output directory does not exist. Creating directory at ' .. target_dir)
         vim.api.nvim_command('!mkdir ' .. target_dir)
     end
+end
 
 
-function N.MarkdownGenPdf()
+function M.MarkdownGenPdf()
 
     local filename_markdown = vim.fn.expand('%') .. '.md'
     local filename_docs = vim.fn.expand('%') .. '.pdf'
@@ -22,4 +23,4 @@ function N.MarkdownGenPdf()
     print('Document Generated.')
 end
 
-return N
+return M
