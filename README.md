@@ -1,7 +1,13 @@
-# markdown-image-paste.nvim
-Paste screenshots into Markdown files. 
+# markdown-tools.nvim
+This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily basis.
 
-This plugin moves the screenshot to a `images` folder in the current working directory.
+## Requirements
+- Pandoc
+
+## Features
+- MarkdownImagePaste
+- MarkdownImageDelete
+- MarkdownGenPdf
 
 ## Workflow: Markdown
 ```bash
@@ -58,6 +64,7 @@ Functions           | Description
 --------------------| --------------------------------------------------------------------
 MarkdownImagePaste  | Paste the image on the clipboard into the current working directory.
 MarkdownImageDelete | Prompts to delete the image under the line.
-TexImagePaste | Paste the image on the clipboard to the current working directory.
-TexImageDelete | Prompts to delete the image under the line.
+MarkdownGenPdf      | Generates a pdf output of the current file using Pandoc.
+TexImagePaste       | Paste the image on the clipboard to the current working directory.
+TexImageDelete      | Prompts to delete the image under the line.
 
