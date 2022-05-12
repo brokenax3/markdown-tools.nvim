@@ -56,8 +56,8 @@ function M.MdxImgPasteRename()
 
     local file = vim.fn.getreg("+"):gsub("\n", "")
     if is_screenshot(file) then
-        local n_filename = vim.fn.input("Enter new filename")
-        local n_pathname = imgDirectory .. new_filename
+        local n_filename = vim.fn.input("Enter new filename: ")
+        local n_pathname = imgDirectory .. n_filename .. ".png"
         local imagetext = "![](" .. n_pathname .. ")"
         vim.api.nvim_command("!mv " .. file .. " " .. n_pathname)
 
