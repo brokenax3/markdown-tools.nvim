@@ -3,15 +3,15 @@ if vim.g.loaded_markdown_tools == 1 then
 end
 
 vim.api.nvim_exec(
-    "command! MdxImgPaste lua require'markdown_image_paste.modules'.MdxImagePaste()",
+    "command! MdxImgPaste lua require'markdown_image_paste.modules'.MdxImgPaste()",
     true
 )
 vim.api.nvim_exec(
-    "command! MdxImgPasteRename lua require'markdown_image_paste.modules'.MdxImagePasteRename()",
+    "command! MdxImgPasteRename lua require'markdown_image_paste.modules'.MdxImgPasteRename()",
     true
 )
 vim.api.nvim_exec(
-    "command! MdxImgDelete lua require'markdown_image_paste.modules'.MdxImageDelete()",
+    "command! MdxImgDelete lua require'markdown_image_paste.modules'.MdxImgDelete()",
     true
 )
 vim.api.nvim_exec(
@@ -19,11 +19,11 @@ vim.api.nvim_exec(
     true
 )
 vim.api.nvim_exec(
-    "command! TexImgPaste lua require'markdown_image_paste.modules'.TexImagePaste()",
+    "command! TexImgPaste lua require'markdown_image_paste.modules'.TexImgPaste()",
     true
 )
 vim.api.nvim_exec(
-    "command! TexImgDelete lua require'markdown_image_paste.modules'.TexImageDelete()",
+    "command! TexImgDelete lua require'markdown_image_paste.modules'.TexImgDelete()",
     true
 )
 
