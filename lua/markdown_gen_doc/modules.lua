@@ -33,7 +33,7 @@ function M.MdxGenPdf()
     vim.api.nvim_command(
         "!pandoc -V geometry:margin=1in "
             .. filename_markdown
-            .. " -o ../docs/"
+            .. " -o ./docs/"
             .. filename_docs
     )
 
@@ -50,9 +50,9 @@ function M.MdxGenHTML()
     check_paths()
 
     vim.api.nvim_command(
-        "!pandoc -V geometry:margin=1in -s"
+        "!pandoc -V geometry:margin=1in -s "
             .. filename_markdown
-            .. " -o ../docs/"
+            .. " -o ./docs/"
             .. filename_docs
     )
 
