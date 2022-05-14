@@ -10,7 +10,7 @@ local function check_ft()
 end
 
 local function check_paths()
-    local target_dir = vim.fn.getcwd(0) .. "docs"
+    local target_dir = vim.fn.getcwd(0) .. "/docs/"
 
     if vim.fn.isdirectory(target_dir) == 0 then
         print(
