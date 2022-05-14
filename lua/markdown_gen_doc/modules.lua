@@ -1,10 +1,9 @@
 local M = {}
 
 local function check_ft()
-
-    if vim.bo.filetype == "markdown" || vim.bo.filetype == "tex" then
+    if vim.bo.filetype == "markdown" or vim.bo.filetype == "tex" then
         return true
-    else 
+    else
         print("Not a Markdown or Tex file")
         return false
     end
@@ -23,7 +22,6 @@ local function check_paths()
 end
 
 function M.MdxGenPdf()
-
     check_ft()
 
     local filename_markdown = vim.fn.expand("%")
@@ -43,7 +41,6 @@ function M.MdxGenPdf()
 end
 
 function M.MdxGenHTML()
-
     check_ft()
 
     local filename_markdown = vim.fn.expand("%")
