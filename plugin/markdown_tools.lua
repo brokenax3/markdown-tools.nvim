@@ -20,7 +20,7 @@ vim.api.nvim_exec(
     true
 )
 vim.api.nvim_exec(
-    "command! MdxGenPdf lua require'markdown_gen_doc.modules'.MdxGenHTML()",
+    "command! MdxGenHTML lua require'markdown_gen_doc.modules'.MdxGenHTML()",
     true
 )
 -- elseif vim.bo.filetype == "tex" then
