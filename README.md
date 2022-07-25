@@ -1,13 +1,21 @@
 # markdown-tools.nvim
-This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily basis.
+This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily
+basis.
+
+This works with Linux systems and MacOS (The setup for screenshot and save path
+to clipboard is more annoying on this one).
 
 ## Requirements
 - Pandoc
 
 ## Features
-- MarkdownImagePaste
-- MarkdownImageDelete
-- MarkdownGenPdf
+- MdxImgPaste
+- MdxImgPasteRename
+- MdxImgDelete
+- MdxGenPdf
+- MdxGenHTML
+- TexImgPaste
+- TexImgDelete
 
 ## Workflow: Markdown
 ```bash
@@ -15,13 +23,20 @@ This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily basis
 # This screenshot will be moved to the new path. The original is removed.
 /default/picture/screenshot.png
 
-# After calling MarkdownImagePaste, the new filename will be
+# After calling MdxImgPaste, the new filename will be
 /current/directory/images/screenshot.png
 
 # ![](/current/directory/images/screenshot.png) will be pasted into the current line.
 
-# Calling MarkdownImageDelete deletes the image with the link under the current line.
+# Calling MdxImgDelete deletes the image with the link under the current line.
 # The current line along with the image will be removed.
+
+# Do a `yi)` in within the () of the image link.
+# Calling MdxImgPasteRename will do a `mv` which renames the file in the same image directory.
+# A prompt will ask the user for the new filename.
+# The file will be pasted into the current line.
+
+# ![](/current/directory/images/new_name_screenshot.png) will be pasted into the current line.
 ```
 
 ## Workflow: LaTeX
@@ -41,12 +56,19 @@ This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily basis
 ```
 
 ## Configuration
-Make sure your desired screenshot workflow sends the image path to the clipboard.
+Make sure your desired screenshot workflow sends the image path to the
+clipboard.
 
-Then, set `vim.g.markdown-image-paste` to a directory which will contain all the screenshots. 
+Then, set `vim.g.markdown-image-paste` to a directory which will contain all
+the screenshots. 
 
 ### Example: Screenshot Script
+
+Make sure your screenshot script sends the path of the screenshot to the
+clipboard.
 ```bash
+#!/bin/bash
+
 FILENAME=~/Pictures/$(date "+%s").png
 maim -s --hidecursor $FILENAME
 
@@ -60,11 +82,13 @@ vim.g.markdown-image-paste = '/your/default/screenshots/directory'
 ```
 
 ## Commands
-Functions           | Description
---------------------| --------------------------------------------------------------------
-MarkdownImagePaste  | Paste the image on the clipboard into the current working directory.
-MarkdownImageDelete | Prompts to delete the image under the line.
-MarkdownGenPdf      | Generates a pdf output of the current file using Pandoc.
-TexImagePaste       | Paste the image on the clipboard to the current working directory.
-TexImageDelete      | Prompts to delete the image under the line.
+
+Functions            | Description
+-------------------- | -------------------------------------------------------------------------------
+MdxImgPaste          | Paste the image on the clipboard into the current working directory.
+MdxImgPasteRename    | Paste the image on the clipboard into the current working directory and rename.
+MdxImgDelete         | Prompts to delete the image under the line.
+MdxGenPdf            | Generates a pdf output of the current file using Pandoc.
+TexImgPaste          | Paste the image on the clipboard to the current working directory.
+TexImgDelete         | Prompts to delete the image under the line.
 
