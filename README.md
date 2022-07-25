@@ -8,6 +8,18 @@ to clipboard is more annoying on this one).
 ## Requirements
 - Pandoc
 
+## Installation
+```lua
+{
+    "brokenax3/markdown-tools.nvim",
+    ft = { "markdown", "tex" },
+    config = function()
+        -- This is where you store your configuration file
+        require("plugins.markdown-image") 
+    end,
+})
+```
+
 ## Features
 - MdxImgPaste
 - MdxImgPasteRename
