@@ -74,10 +74,11 @@ clipboard.
 Then, set `vim.g.markdown-image-paste` to a directory which will contain all
 the screenshots. 
 
-### Example: Screenshot Script
+### Example: Screenshot Script (Linux)
 
 Make sure your screenshot script sends the path of the screenshot to the
 clipboard.
+
 ```bash
 #!/bin/bash
 
@@ -85,6 +86,18 @@ FILENAME=~/Pictures/$(date "+%s").png
 maim -s --hidecursor $FILENAME
 
 echo "$FILENAME" | xclip
+```
+
+### Example: Screenshot Script (MacOS)
+
+Create a Shortcut which receives any input. Keybindings may not work in all applications.
+
+```bash
+#!/bin/bash
+FILE=~/Desktop/$(date "+%s").png
+
+screencapture -i $FILE
+echo "$FILE" | pbcopy
 ```
 
 ### Example: Configuration
