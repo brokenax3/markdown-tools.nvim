@@ -2,13 +2,13 @@ local M = {}
 
 local function is_screenshot(filepath)
     if string.find(filepath, "(.png|.jpg)$") then
-        return false
-    end
-
-    local file = io.open(filepath, "r")
-    if file ~= nil then
-        io.close(file)
-        return true
+        local file = io.open(filepath, "r")
+        if file ~= nil then
+            io.close(file)
+            return true
+        else
+            return false
+        end
     else
         return false
     end
