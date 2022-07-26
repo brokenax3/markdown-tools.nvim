@@ -1,7 +1,7 @@
 local M = {}
 
 local function is_screenshot(filepath)
-    if string.find(filepath, "(png|jpg)$") then
+    if string.find(filepath, "%.png$") or string.find(filepath, "%.jpg$") then
         local file = io.open(filepath, "r")
         if file ~= nil then
             io.close(file)
@@ -34,6 +34,7 @@ function M.MdxImgPaste()
     end
 
     local file = vim.fn.getreg("+"):gsub("\n", "")
+    -- print(file)
     if is_screenshot(file) then
         local n_file = send_to_cwd(file, imgDirectory)
         local imagetext = "![](" .. n_file .. ")"
@@ -42,7 +43,7 @@ function M.MdxImgPaste()
         vim.api.nvim_paste(imagetext, 0, -1)
         print("Image link is pasted into the buffer")
     else
-        print("Not a screenshot")
+        print(file .. " is not a screenshot")
     end
 end
 
@@ -68,7 +69,7 @@ function M.MdxImgPasteRename()
         vim.api.nvim_paste(imagetext, 0, -1)
         print("Image link is pasted into the buffer")
     else
-        print("Not a screenshot")
+        print(file .. " is not a screenshot")
     end
 end
 
@@ -116,7 +117,7 @@ function M.TexImgPaste()
         vim.api.nvim_paste(string.format(imagetext, relative_link), 0, -1)
         print("Image link is pasted into the buffer")
     else
-        print("Not a screenshot")
+        print(file .. " is not a screenshot")
     end
 end
 
