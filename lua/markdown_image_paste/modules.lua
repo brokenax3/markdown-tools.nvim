@@ -1,6 +1,10 @@
 local M = {}
 
 local function is_screenshot(filepath)
+    if string.find(s, "(.png|.jpg)$") then
+        return false
+    end
+
     local file = io.open(filepath, "r")
     if file ~= nil then
         io.close(file)
@@ -76,9 +80,7 @@ function M.MdxImgDelete()
         local file = imagetext:match("!%[.*]%((.+)%)")
 
         if is_screenshot(file) then
-            if
-                vim.fn.input("File " .. file .. " found. Delete? (y/n) ") == "y"
-            then
+            if vim.fn.input("File " .. file .. " found. Delete? (y/n) ") == "y" then
                 vim.api.nvim_command("!rm " .. file)
                 vim.api.nvim_del_current_line()
             else
@@ -129,9 +131,7 @@ function M.TexImgDelete()
         -- print(filename)
 
         if is_screenshot(filename) then
-            if
-                vim.fn.input("File " .. file .. " found. Delete? (y/n) ") == "y"
-            then
+            if vim.fn.input("File " .. file .. " found. Delete? (y/n) ") == "y" then
                 vim.api.nvim_command("silent !rm " .. filename)
                 vim.api.nvim_command("silent " .. start .. "del 6")
 
