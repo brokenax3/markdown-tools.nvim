@@ -1,7 +1,7 @@
 local M = {}
 
 local function is_screenshot(filepath)
-    if string.find(s, "(.png|.jpg)$") then
+    if string.find(filepath, "(.png|.jpg)$") then
         return false
     end
 
