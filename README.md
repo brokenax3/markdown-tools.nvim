@@ -112,9 +112,10 @@ echo "$FILE" | pbcopy
 ```
 
 ### Example: Configuration
-```lua
-vim.g.markdown-image-paste = '/your/default/screenshots/directory'
 
+```lua
+vim.g.markdown_tools.ssdir = '/your/default/screenshots/directory'
+vim.g.markdown_tools.subdir = true
 ```
 
 ## Commands
@@ -134,4 +135,3 @@ TexImgDelete         | Prompts to delete the image under the line.
 
 - Images are now saved to `CURRENT_WORKING_DIR/images/BUFFER_FILENAME/`
 - Verified to be working on MacOS as well
-

@@ -15,7 +15,7 @@ local function is_screenshot(filepath)
 end
 
 local function send_to_cwd(filepath, currentDirectory)
-    local ssDirectory = vim.g.markdown_image_paste
+    local ssDirectory = vim.g.markdown_tools.ssdir
     local filename = filepath:gsub(ssDirectory, "")
 
     return currentDirectory .. filename
@@ -28,16 +28,18 @@ local function check_img_dir()
         vim.api.nvim_command("!mkdir " .. imgDirectory)
     end
 
-    local subImgDirectory = imgDirectory .. vim.fn.expand("%:t"):gsub("%..*$", "") .. "/"
+    if vim.g.markdown_tools.subdir == true then
+        local subImgDirectory = imgDirectory .. vim.fn.expand("%:t"):gsub("%..*$", "") .. "/"
 
-    print(subImgDirectory)
+        if vim.fn.isdirectory(subImgDirectory) == 0 then
+            print("Image subdirectory does not exist. Creating " .. subImgDirectory)
+            vim.api.nvim_command("!mkdir " .. subImgDirectory)
+        end
 
-    if vim.fn.isdirectory(subImgDirectory) == 0 then
-        print("Image subdirectory does not exist. Creating " .. subImgDirectory)
-        vim.api.nvim_command("!mkdir " .. subImgDirectory)
+        return subImgDirectory
+    else
+        return imgDirectory
     end
-
-    return subImgDirectory
 end
 
 local function check_config()
