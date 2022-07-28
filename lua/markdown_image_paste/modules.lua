@@ -21,22 +21,40 @@ local function send_to_cwd(filepath, currentDirectory)
     return currentDirectory .. filename
 end
 
-function M.MdxImgPaste()
-    if vim.g.markdown_image_paste == nil then
-        print("Image directory not set")
-        return
-    end
+local function check_img_dir()
     local imgDirectory = vim.fn.getcwd(0) .. "/images/"
-
     if vim.fn.isdirectory(imgDirectory) == 0 then
         print("Image directory does not exist. Creating images directory...")
         vim.api.nvim_command("!mkdir " .. imgDirectory)
     end
 
+    local subImgDirectory = imgDirectory .. vim.fn.expand("%:t"):gsub("%..*$", "") .. "/"
+
+    print(subImgDirectory)
+
+    if vim.fn.isdirectory(subImgDirectory) == 0 then
+        print("Image subdirectory does not exist. Creating " .. subImgDirectory)
+        vim.api.nvim_command("!mkdir " .. subImgDirectory)
+    end
+
+    return subImgDirectory
+end
+
+local function check_config()
+    if vim.g.markdown_image_paste == nil then
+        print("Image directory not set")
+        return
+    end
+end
+
+function M.MdxImgPaste()
+    check_config()
+
+    local subImgDirectory = check_img_dir()
     local file = vim.fn.getreg("+"):gsub("\n", "")
-    -- print(file)
+
     if is_screenshot(file) then
-        local n_file = send_to_cwd(file, imgDirectory)
+        local n_file = send_to_cwd(file, subImgDirectory)
         local imagetext = "![](" .. n_file .. ")"
         vim.api.nvim_command("!mv " .. file .. " " .. n_file)
 
@@ -48,21 +66,14 @@ function M.MdxImgPaste()
 end
 
 function M.MdxImgPasteRename()
-    if vim.g.markdown_image_paste == nil then
-        print("Image directory not set")
-        return
-    end
-    local imgDirectory = vim.fn.getcwd(0) .. "/images/"
+    check_config()
 
-    if vim.fn.isdirectory(imgDirectory) == 0 then
-        print("Image directory does not exist. Creating images directory...")
-        vim.api.nvim_command("!mkdir " .. imgDirectory)
-    end
-
+    local subImgDirectory = check_img_dir()
     local file = vim.fn.getreg("+"):gsub("\n", "")
+
     if is_screenshot(file) then
         local n_filename = vim.fn.input("Enter new filename: ")
-        local n_pathname = imgDirectory .. n_filename .. ".png"
+        local n_pathname = subImgDirectory .. n_filename .. ".png"
         local imagetext = "![](" .. n_pathname .. ")"
         vim.api.nvim_command("!mv " .. file .. " " .. n_pathname)
 
@@ -94,20 +105,13 @@ function M.MdxImgDelete()
 end
 
 function M.TexImgPaste()
-    if vim.g.markdown_image_paste == nil then
-        print("Image directory not set")
-        return
-    end
-    local imgDirectory = vim.fn.getcwd(0) .. "/images/"
+    check_config()
 
-    if vim.fn.isdirectory(imgDirectory) == 0 then
-        print("Image directory does not exist. Creating images directory...")
-        vim.api.nvim_command("!mkdir " .. imgDirectory)
-    end
-
+    local subImgDirectory = check_img_dir()
     local file = vim.fn.getreg("+"):gsub("\n", "")
+
     if is_screenshot(file) then
-        local n_file = new_dir_rename(file, imgDirectory)
+        local n_file = new_dir_rename(file, subImgDirectory)
         local relative_link = n_file:match("(images/.*)")
         local imagetext = [=[\begin{figure}[htbp]]=]
             .. "\n    \\centering\n    \\includegraphics[width=0.7\\textwidth, height=8cm]{%s}\n    \\caption{}\n    \\label{fig:}\n\\end{figure}\n"

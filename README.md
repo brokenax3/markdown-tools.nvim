@@ -3,7 +3,15 @@ This is a collection of Markdown/ LaTeX Lua Commands that I use on a daily
 basis.
 
 This works with Linux systems and MacOS (The setup for screenshot and save path
-to clipboard is more annoying on this one).
+to clipboard is more annoying on this one). In this case if using Alacritty,
+one must define a shortcut as follows:
+
+```yaml
+key_bindings:
+  - { key: X,              mods: Command|Shift,                   command: {program: "/usr/bin/shortcuts", args: ["run", "Screenshot and Copy Path"]}}
+
+# Note that "Screenshot and Copy Path" is a shortcut created on MacOS. This is shown below in the scripts section.
+```
 
 ## Requirements
 - Pandoc
@@ -36,9 +44,9 @@ to clipboard is more annoying on this one).
 /default/picture/screenshot.png
 
 # After calling MdxImgPaste, the new filename will be
-/current/directory/images/screenshot.png
+/current/directory/buffername/images/screenshot.png
 
-# ![](/current/directory/images/screenshot.png) will be pasted into the current line.
+# ![](/current/directory/buffername/images/screenshot.png) will be pasted into the current line.
 
 # Calling MdxImgDelete deletes the image with the link under the current line.
 # The current line along with the image will be removed.
@@ -49,6 +57,9 @@ to clipboard is more annoying on this one).
 # The file will be pasted into the current line.
 
 # ![](/current/directory/images/new_name_screenshot.png) will be pasted into the current line.
+
+# MdxImgPasteRename works as well without having to call MdxImgPaste the first time.
+# It does the same thing with the addition of being able to rename the file.
 ```
 
 ## Workflow: LaTeX
@@ -116,4 +127,11 @@ MdxImgDelete         | Prompts to delete the image under the line.
 MdxGenPdf            | Generates a pdf output of the current file using Pandoc.
 TexImgPaste          | Paste the image on the clipboard to the current working directory.
 TexImgDelete         | Prompts to delete the image under the line.
+
+# Changelog
+
+## Jul 29, 2022
+
+- Images are now saved to `CURRENT_WORKING_DIR/images/BUFFER_FILENAME/`
+- Verified to be working on MacOS as well
 
