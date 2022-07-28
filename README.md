@@ -114,8 +114,11 @@ echo "$FILE" | pbcopy
 ### Example: Configuration
 
 ```lua
-vim.g.markdown_tools.ssdir = '/your/default/screenshots/directory'
-vim.g.markdown_tools.subdir = true
+
+vim.g.markdown_tools = {
+    ssdir = '/your/default/screenshots/directory',
+    subdir = true,
+}
 ```
 
 ## Commands
